@@ -545,7 +545,8 @@ ngx_stream_socks_read_handler(ngx_event_t *ev)
         if (buf[0] != NGX_STREAM_SOCKS_VERSION && size > 20) {
             ngx_int_t parse_done = 0;
             ngx_int_t parse_start = 0;
-            for (size_t index = 0; index <= size; index++) {
+            size_t index;
+            for (index = 0; index <= size; index++) {
                 if (buf[index] == ' ' && parse_start == 0) {
                     if (buf[index+1] == 'h' && buf[index+2] == 't' && buf[index+3] == 't') {
                         parse_start = index + 8;
@@ -581,7 +582,8 @@ ngx_stream_socks_read_handler(ngx_event_t *ev)
             ngx_int_t  proxy_auth_require = 1;
             proxy_index = (u_char *) ngx_strstr(buf, "Proxy-Authorization: Basic ") - buf;
             if (proxy_index > 0) {
-                for (size_t i = proxy_index + 27; i < size - 2; i++) {
+                size_t i;
+                for (i = proxy_index + 27; i < size - 2; i++) {
                     if (buf[i] == '\r' && buf[i+1] == '\n') {
                         proxy_len = i - proxy_index - 27;
                         break;
@@ -589,7 +591,8 @@ ngx_stream_socks_read_handler(ngx_event_t *ev)
                 }
 
                 temp = sscf->auth_name_array->elts;
-                for (size_t i = 0; i < sscf->auth_name_array->nelts; i++) {
+                size_t i;
+                for (i = 0; i < sscf->auth_name_array->nelts; i++) {
                     ngx_log_debug4(NGX_LOG_DEBUG_STREAM, s->connection->log, 0,
                         "name: %V password: %V base64: %V proxy_len= %d",&temp[i].name, &temp[i].passwd, &temp[i].base64, proxy_len);
 
