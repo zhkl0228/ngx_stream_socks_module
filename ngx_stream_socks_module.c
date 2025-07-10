@@ -591,7 +591,6 @@ ngx_stream_socks_read_handler(ngx_event_t *ev)
                 }
 
                 temp = sscf->auth_name_array->elts;
-                size_t i;
                 for (i = 0; i < sscf->auth_name_array->nelts; i++) {
                     ngx_log_debug4(NGX_LOG_DEBUG_STREAM, s->connection->log, 0,
                         "name: %V password: %V base64: %V proxy_len= %d",&temp[i].name, &temp[i].passwd, &temp[i].base64, proxy_len);
